@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface BotRepository extends JpaRepository<Bot, Long> {
     List<Bot> findBybotName(String botName); // custom finder method which returns a list of bots of the given name
+
     Bot findByBotId(String botId);
 
     // no need to implement any methods, it is already implemented in JpaRepository

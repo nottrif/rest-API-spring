@@ -32,12 +32,25 @@ public class BotResourceController {
     }
 
     @PutMapping("/bots/{id}")
-    public ResponseEntity updateBot(@PathVariable String id) {
-        Bot bot = botRepository.findByBotId(id);
+    public ResponseEntity<Bot> updateBot(@PathVariable("id") String id, @RequestBody Bot bot) {
+        Bot _bot = botRepository.findByBotId(id);
         if (bot == null) {
-            return ResponseEntity.badRequest().body("ID does not exist");
+            return ResponseEntity.notFound().build();
         }
-        
+        _bot.setBotId(bot.getBotId());
+        _bot.setBotName(bot.getBotName());
+        _bot.setBotDesc(bot.getBotDesc());
+        return ResponseEntity.ok(botRepository.save(_bot));
+    }
+
+    @DeleteMapping("/bots/{id}")
+    public ResponseEntity<Bot> deleteBot(@PathVariable("id") String id) {
+        Bot _bot = botRepository.findByBotId(id);
+        if (_bot == null) {
+            return ResponseEntity.notFound().build();
+        }
+        botRepository.delete(_bot);
+        return ResponseEntity.ok().build();
     }
 }
 
