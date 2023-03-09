@@ -34,7 +34,7 @@ public class BotResourceController {
     @PutMapping("/bots/{id}")
     public ResponseEntity<Bot> updateBot(@PathVariable("id") String id, @RequestBody Bot bot) {
         Bot _bot = botRepository.findByBotId(id);
-        if (bot == null) {
+        if (_bot == null) {
             return ResponseEntity.notFound().build();
         }
         _bot.setBotId(bot.getBotId());
